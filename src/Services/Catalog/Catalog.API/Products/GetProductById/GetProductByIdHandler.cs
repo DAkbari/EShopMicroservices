@@ -9,7 +9,7 @@
             var result = await session.Query<Product>().Where(x => x.Id == query.id).FirstOrDefaultAsync(cancellationToken);
             if (result is null)
             {
-                throw new ProductNotFoundException();
+                throw new ProductNotFoundException(query.id);
             }
             return new GetProductByIdResult(result);
         }

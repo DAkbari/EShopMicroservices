@@ -14,7 +14,7 @@
             var product = await session.Query<Product>().Where(x => x.Id == command.id).FirstOrDefaultAsync(cancellationToken);
             if (product == null)
             {
-                throw new ProductNotFoundException();
+                throw new ProductNotFoundException(command.id);
             }
             product.Name = command.Name;
             product.Description = command.Description;

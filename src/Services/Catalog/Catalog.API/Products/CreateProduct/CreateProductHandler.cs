@@ -1,4 +1,18 @@
-﻿namespace Catalog.API.Products.CreateProduct
+﻿using Catalog.API.Products.CreateProduct;
+
+
+public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+{
+    public CreateProductCommandValidator()
+    {
+        RuleFor(x => x.Name).NotEmpty().WithMessage("name property cannot be empty");
+        RuleFor(x => x.Description).NotEmpty().WithMessage("description cannot be empty");
+        RuleFor(x => x.Price).GreaterThan(0).WithMessage("price should be higher than zero");
+        RuleFor(x => x.Category).NotEmpty().WithMessage("category is required");
+    }
+}
+
+namespace Catalog.API.Products.CreateProduct
 {
     public record CreateProductCommand(
         string Name,
