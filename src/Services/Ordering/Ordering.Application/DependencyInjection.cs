@@ -1,12 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BuildingBlocks.Behaviors;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
-namespace Ordering.Application
+namespace Ordering.Application;
+
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {
-            return services;
-        }
+        services.AddMediatR(
+            cfg =>
+            {
+                cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+                cfg.AddBehavior(typeof(LoggingBehavior<,>), typeof(ValidationBehavior<,>));
+            });
+        return services;
     }
 }
