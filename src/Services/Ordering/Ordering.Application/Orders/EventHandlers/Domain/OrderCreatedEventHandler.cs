@@ -19,6 +19,5 @@ public class OrderCreatedEventHandler(
             var orderCreateIntegrationEvent = domainEvent.order.ToOrderDto();
             await publishEndpoint.Publish(orderCreateIntegrationEvent, cancellationToken);
         }
-
     }
 }
