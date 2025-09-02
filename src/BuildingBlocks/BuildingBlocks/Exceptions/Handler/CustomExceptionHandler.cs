@@ -36,6 +36,7 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IE
             problemDetails.Extensions.Add("ValidationErrors", validationException.Errors);
         }
 
+        context.Response.StatusCode = StatusCode;
         await context.Response.WriteAsJsonAsync(problemDetails, cancellationToken: cancellationToken);
         return true;
     }

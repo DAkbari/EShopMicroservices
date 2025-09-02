@@ -30,11 +30,11 @@ builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 //    var basketRopository = service.GetRequiredService<BasketRepository>();
 //    return new CachedBasketRepository(basketRopository, service.GetRequiredService<IDistributedCache>());
 //});
-builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddStackExchangeRedisCache(config =>
 {
     config.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddMessageBroker(builder.Configuration);
 
 //Cross Cutting Concerns
@@ -60,10 +60,7 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 var app = builder.Build();
 //Add Pipelines
 app.MapCarter();
-app.UseExceptionHandler(options =>
-{
-
-});
+app.UseExceptionHandler(options => { });
 app.UseHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
